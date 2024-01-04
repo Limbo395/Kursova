@@ -10,40 +10,53 @@ try:
         database=db_name,
         cursorclass=pymysql.cursors.DictCursor
     )
-    print("Successfully connected...")
-    print("#" * 20)
 
 
-
+    def for_report(variant):
+        with conection.cursor() as cursor:
+            match variant:
+                case "RAV_amount":
+                    cursor.execute("SELECT SUM(ar) AS RAV_amount FROM (SELECT COUNT(ID_Of_BRV) AS ar FROM `BRV` UNION ALL SELECT COUNT(ID_Of_RRV)" 
+                                   + "AS ar FROM `RRV` UNION ALL SELECT COUNT(ID_Of_TRV) AS ar FROM `TRV`) AS subquery")
+                case "DIV_amount":
+                   cursor.execute("SELECT COUNT(*) AS DIV_amount FROM `SourcesOfIonizingRadiation`")
+                case "RAV_activity":
+                        cursor.execute("SELECT SUM(ar) AS RAV_activity FROM (SELECT SUM(GeneralActivity) AS ar FROM `BRV` UNION ALL SELECT SUM(GeneralActivity)" 
+                                   + "AS ar FROM `RRV` UNION ALL SELECT SUM(GeneralActivity) AS ar FROM `TRV`) AS subquery")
+                case "DIV_activity":
+                    cursor.execute("SELECT SUM(Activity) AS DIV_activity FROM `SourcesOfIonizingRadiation`")
+                case "CriticalStorages":
+                    cursor.execute("SELECT * FROM Storages WHERE StorageCondition IN (3, 4)")
+                case "OverdueStorages":
+                    cursor.execute("SELECT * FROM Storages WHERE DateOfVerification + INTERVAL 6 MONTH <= CURDATE()")
+ 
     def show_all(variant):
-            with conection.cursor() as cursor:
-                match variant:
-                    case "BRV":
-                        cursor.execute("SELECT * from `BRV`")
-                    case "RRV":
-                        cursor.execute("SELECT * from `RRV`")
-                    case "TRV":
-                        cursor.execute("SELECT * from `TRV`")
-                    case "DIV":
-                        cursor.execute("SELECT * from `SourcesOfIonizingRadiation`")
-                    case "Storages":
-                        cursor.execute("SELECT * from `Storages`")
-                    case "Vocabulare_StorageId":
-                        cursor.execute("SELECT ID, NameOfStorage from `Storages`")
-                    case "Vocabulare_StorageCondition":
-                        cursor.execute("SELECT ID_OfStates, NameOfStates from `DirectoryOfStates`")
-                    case "Vocabulare_StorageMethods":
-                        cursor.execute("SELECT ID_OfStorageMethod, NameOfStorageMethod, TemperatureRequirementsInStorage, PressureRequirementsInStorage from `DirectoryOfStorageMethods`")
-                    case "Vocabulare_Radionuclide":
-                        cursor.execute("SELECT ID, NameOfRadionuclide FROM `RadionuclideDirectory`")
-                    case "Vocabulare_TypesOfStorage":
-                        cursor.execute("SELECT ID_OfType, NameOfTypes from `DirectoryOfTypes`")
+        with conection.cursor() as cursor:
+            match variant:
+                case "BRV":
+                    cursor.execute("SELECT * from `BRV`")
+                case "RRV":
+                    cursor.execute("SELECT * from `RRV`")
+                case "TRV":
+                    cursor.execute("SELECT * from `TRV`")
+                case "DIV":
+                    cursor.execute("SELECT * from `SourcesOfIonizingRadiation`")
+                case "Storages":
+                    cursor.execute("SELECT * from `Storages`")
 
-                    # case "Vocabulare_RAV":
-                    #     cursor.execute("SELECT ID, NameOfStorage, (SELECT ID, NameOfRadionuclide FROM `RadionuclideDirectory`) from `Storages`  UNION ALL SELECT ID_OfStorageMethod, NameOfStorageMethod, TemperatureRequirementsInStorage, PressureRequirementsInStorage from `DirectoryOfStorageMethods`")
-                    # case "Vocabulare_Storage":
-                    #     cursor.execute("SELECT ID_Of_States, NameOfStates from `DirectoryOfStates` UNION ALL SELECT ID_Of_States, NameOfStates from `DirectoryOfStates`")
-                return cursor.fetchall()
+                case "Vocabulare_StorageId":
+                    cursor.execute("SELECT ID, NameOfStorage from `Storages`")
+                case "Vocabulare_StorageCondition":
+                    cursor.execute("SELECT ID_OfStates, NameOfStates from `DirectoryOfStates`")
+                case "Vocabulare_StorageMethods":
+                    cursor.execute("SELECT ID_OfStorageMethod, NameOfStorageMethod, TemperatureRequirementsInStorage, PressureRequirementsInStorage from `DirectoryOfStorageMethods`")
+                case "Vocabulare_Radionuclide":
+                    cursor.execute("SELECT ID, NameOfRadionuclide FROM `RadionuclideDirectory`")
+                case "Vocabulare_TypesOfStorage":
+                    cursor.execute("SELECT ID_OfType, NameOfTypes from `DirectoryOfTypes`")
+
+                    
+            return cursor.fetchall()
     def update_row(variant, values):
         with conection.cursor() as cursor:
             match variant:

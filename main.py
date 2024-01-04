@@ -53,7 +53,10 @@ def Report(root):
         return table
 
     def create_text_for_report():
-        return "Nigga"
+        
+        return "RAV amount = "+for_report("RAV_amount")
+    
+    
 
 
     def text_to_file(text):
@@ -63,8 +66,7 @@ def Report(root):
 
 
 
-    tree_of_radiation_substances = make_tree(root, show_all("BRV"))
-    tree_of_storages = make_tree(root, show_all("Storages"))
+    
 
     filename = simpledialog.askstring("Імʼя фалйлу", "Введіь імʼя файлу для звіту:")
     if filename == None or filename == "":
@@ -73,10 +75,14 @@ def Report(root):
     doc = SimpleDocTemplate(filename, pagesize=letter)
     
     doc.build([report_file(), Spacer(1, 50), 
-               table_to_report(tree_of_radiation_substances), Spacer(1, 50),
-               table_to_report(tree_of_storages), Spacer(1, 50),
-               text_to_file(create_text_for_report())
-               ])
+               table_to_report(make_tree(root, show_all("BRV"))), Spacer(1, 50),
+               table_to_report(make_tree(root, show_all("RRV"))), Spacer(1, 50),
+               table_to_report(make_tree(root, show_all("TRV"))), Spacer(1, 50),
+               table_to_report(make_tree(root, show_all("DIV"))), Spacer(1, 50),
+               table_to_report(make_tree(root, show_all("Storages"))), Spacer(1, 50),
+               text_to_file(create_text_for_report()),
+               table_to_report(make_tree(root, for_report("CriticalStorages"))), Spacer(1, 50),
+               table_to_report(make_tree(root, for_report("OverdueStorages"))), Spacer(1, 50)])
 
 
 
