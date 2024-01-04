@@ -31,9 +31,9 @@ try:
                     case "Vocabulare_StorageId":
                         cursor.execute("SELECT ID, NameOfStorage from `Storages`")
                     case "Vocabulare_StorageCondition":
-                        cursor.execute("SELECT ID_Of_States, NameOfStates from `DirectoryOfStates`")
+                        cursor.execute("SELECT ID_OfStates, NameOfStates from `DirectoryOfStates`")
                     case "Vocabulare_StorageMethods":
-                        cursor.execute("SELECT ID_OfStorageMethod, NameOfStorageMethod, TemperatereRequirementsInStorage, PressureRequirementsInStorage from `DirectoryOfStorageMethods`")
+                        cursor.execute("SELECT ID_OfStorageMethod, NameOfStorageMethod, TemperatureRequirementsInStorage, PressureRequirementsInStorage from `DirectoryOfStorageMethods`")
                     case "Vocabulare_Radionuclide":
                         cursor.execute("SELECT ID, NameOfRadionuclide FROM `RadionuclideDirectory`")
                     case "Vocabulare_TypesOfStorage":
