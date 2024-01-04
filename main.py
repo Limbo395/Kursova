@@ -65,7 +65,7 @@ def button_click_for_table(root, variant):
 
 
         button_search = tk.Button(search_window, text="Search", command=search)
-        button_search.pack(padx=5, pady=5)
+        button_search.pack(ankor = tk.CENTER, padx=5, pady=5)
 
         search_window.grab_set()
         search_window.focus_set()
