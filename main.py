@@ -15,7 +15,6 @@ def make_tree(window, rows):
     return tree
 
 
-
 def button_click_for_table(root, variant):
     def on_closing():
         root.deiconify()
