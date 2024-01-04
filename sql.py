@@ -46,15 +46,15 @@ try:
                     cursor.execute("SELECT * from `Storages`")
 
                 case "Vocabulare_StorageId":
-                    cursor.execute("SELECT ID, NameOfStorage from `Storages`")
+                    cursor.execute("SELECT ID, NameOfStorage from `Storages` ORDER BY ID")
                 case "Vocabulare_StorageCondition":
-                    cursor.execute("SELECT ID_OfStates, NameOfStates from `DirectoryOfStates`")
+                    cursor.execute("SELECT ID_OfStates, NameOfStates from `DirectoryOfStates` ORDER BY ID_OfStates")
                 case "Vocabulare_StorageMethods":
-                    cursor.execute("SELECT ID_OfStorageMethod, NameOfStorageMethod, TemperatureRequirementsInStorage, PressureRequirementsInStorage from `DirectoryOfStorageMethods`")
+                    cursor.execute("SELECT ID_OfStorageMethod, NameOfStorageMethod, TemperatureRequirementsInStorage, PressureRequirementsInStorage from `DirectoryOfStorageMethods` ORDER BY ID_OfStorageMethod")
                 case "Vocabulare_Radionuclide":
-                    cursor.execute("SELECT ID, NameOfRadionuclide FROM `RadionuclideDirectory`")
+                    cursor.execute("SELECT ID, NameOfRadionuclide FROM `RadionuclideDirectory` ORDER BY ID ")
                 case "Vocabulare_TypesOfStorage":
-                    cursor.execute("SELECT ID_OfType, NameOfTypes from `DirectoryOfTypes`")
+                    cursor.execute("SELECT ID_OfType, NameOfTypes from `DirectoryOfTypes` ORDER BY ID_OfType")
                     
             return cursor.fetchall()
     def update_row(variant, values):
