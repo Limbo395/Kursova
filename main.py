@@ -22,6 +22,8 @@ def button_click_for_table(root, variant):
     def on_closing():
         root.deiconify()
         window.destroy()
+        return
+    
     def search_in_tree(tree):
         def search():
             search_query = entry_search.get().lower()
@@ -70,7 +72,6 @@ def button_click_for_table(root, variant):
         search_window.grab_set()
         search_window.focus_set()
         search_window.wait_window()
-        print("n")
         
     def edit_row(window):
         def on_closing_third_window():
@@ -83,6 +84,25 @@ def button_click_for_table(root, variant):
             tree.item(selected_item, values=new_values)
             window.deiconify()
             edit_window.destroy()
+        def display_additional_tables():
+            if variant == "BRV" or variant == "TRV" or variant == "RRV" or variant == "DIV":
+                tables_to_display = ["Vocabulare_StorageId", "Vocabulare_Radionuclide", "Vocabulare_StorageMethods"]
+            elif variant == "Storages":
+                tables_to_display = ["Vocabulare_StorageCondition", "Vocabulare_TypesOfStorage"]
+            else:
+                return
+
+            additional_window = tk.Toplevel(edit_window)
+            additional_window.title("Additional Tables")
+            additional_window.resizable(False, False)
+
+            # Show tables according to tables_to_display content
+            for table_name in tables_to_display:
+                table_tree = make_tree(additional_window, show_all(table_name))
+                table_tree.pack()
+
+            additional_window.protocol("WM_DELETE_WINDOW", lambda: additional_window.destroy())
+
         window.withdraw()
         selected_item = tree.selection()
         if not selected_item:
@@ -107,8 +127,13 @@ def button_click_for_table(root, variant):
             if index == 0:
                 entry.config(state="disabled")
             entries.append(entry)
+
         save_button = tk.Button(edit_window, text="Save", command=save_changes)
         save_button.grid(row=len(columns), column=0, columnspan=2, pady=10)
+
+
+        display_tables_button = tk.Button(edit_window, text="Display Additional Tables", command=display_additional_tables)
+        display_tables_button.grid(row=len(columns) + 1, column=0, columnspan=2, pady=10)
 
     def delete_row():
         selected_item = tree.selection()
@@ -135,6 +160,24 @@ def button_click_for_table(root, variant):
             window.deiconify()
             add_window.destroy()
 
+        def display_additional_tables():
+            if variant == "BRV" or variant == "TRV" or variant == "RRV" or variant == "DIV":
+                tables_to_display = ["Vocabulare_StorageId", "Vocabulare_Radionuclide", "Vocabulare_StorageMethods"]
+            elif variant == "Storages":
+                tables_to_display = ["Vocabulare_StorageCondition", "Vocabulare_TypesOfStorage"]
+            else:
+                return
+            additional_window = tk.Toplevel(add_window)
+            additional_window.title("Additional Tables")
+            additional_window.resizable(False, False)
+
+            # Show tables according to tables_to_display content
+            for table_name in tables_to_display:
+                table_tree = make_tree(additional_window, show_all(table_name))
+                table_tree.pack()
+
+            additional_window.protocol("WM_DELETE_WINDOW", lambda: additional_window.destroy())
+
         window.withdraw()
         add_window = tk.Toplevel(window)
         add_window.title("Add New Row")
@@ -158,6 +201,9 @@ def button_click_for_table(root, variant):
 
         add_button = tk.Button(add_window, text="Add", command=add_new)
         add_button.grid(row=len(columns), column=0, columnspan=2, pady=10)
+
+        display_tables_button = tk.Button(add_window, text="Display Additional Tables", command=display_additional_tables)
+        display_tables_button.grid(row=len(columns) + 1, column=0, columnspan=2, pady=10)
 
     root.withdraw()
     window = tk.Toplevel(root)
