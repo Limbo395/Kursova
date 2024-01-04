@@ -22,7 +22,55 @@ def button_click_for_table(root, variant):
     def on_closing():
         root.deiconify()
         window.destroy()
-    
+    def search_in_tree(tree):
+        def search():
+            search_query = entry_search.get().lower()
+            search_category = combo_search.get()
+            if search_category == "All":
+                for item in tree.get_children():
+                    values = tree.item(item, 'values')
+                    if search_query in str(values).lower():
+                        tree.selection_set(item)
+                        tree.focus(item)
+                        search_window.destroy()
+                        return
+            else:
+                column_index = tree['columns'].index(search_category)
+                for item in tree.get_children():
+                    values = tree.item(item, 'values')
+                    if search_query in str(values[column_index]).lower():
+                        tree.selection_set(item)
+                        tree.focus(item)
+                        search_window.destroy()
+                        return
+
+            messagebox.showinfo("Search", "No matching results found.")
+
+        search_window = tk.Toplevel()
+        search_window.title("Search")
+        search_window.resizable(False, False)
+
+        label_category = tk.Label(search_window, text="Search Category:", font=("DIN Condensed Bold (Body)", 14))
+        label_category.pack(side=tk.LEFT, padx=5, pady=5)
+
+        categories = ["All"] + list(tree['columns'])
+        combo_search = ttk.Combobox(search_window, values=categories, state="readonly")
+        combo_search.current(0)  # Встановлюємо вибір за замовчуванням на "All"
+        combo_search.pack(side=tk.LEFT, padx=5, pady=5)
+
+        label_search = tk.Label(search_window, text="Search Query:", font=("DIN Condensed Bold (Body)", 14))
+        label_search.pack(side=tk.LEFT, padx=5, pady=5)
+
+        entry_search = tk.Entry(search_window, width=70)
+        entry_search.pack(side=tk.LEFT, padx=5, pady=5)
+
+        button_search = tk.Button(search_window, text="Search", command=search)
+        button_search.pack(side=tk.LEFT, padx=5, pady=50)
+  
+        search_window.grab_set()
+        search_window.focus_set()
+        search_window.wait_window()
+        
     def edit_row(window):
         def on_closing_third_window():
             window.deiconify()
@@ -47,6 +95,7 @@ def button_click_for_table(root, variant):
         edit_window = tk.Toplevel(window)
         edit_window.title("Edit Row")
         edit_window.protocol("WM_DELETE_WINDOW", lambda: on_closing_third_window())
+        edit_window.resizable(False, False)
 
         entries = []
         for index, (column, value) in enumerate(zip(columns, values)):
@@ -89,6 +138,7 @@ def button_click_for_table(root, variant):
         add_window = tk.Toplevel(window)
         add_window.title("Add New Row")
         add_window.protocol("WM_DELETE_WINDOW", lambda: on_closing_third_window())
+        add_window.resizable(False, False)
 
         entries = []
         columns = tree['columns']
@@ -112,6 +162,7 @@ def button_click_for_table(root, variant):
     window = tk.Toplevel(root)
     window.title("Таблиця з бази даних")
     window.protocol("WM_DELETE_WINDOW", lambda: on_closing())
+    window.resizable(False, False)
 
     match variant:
         case "BRV":
@@ -129,6 +180,9 @@ def button_click_for_table(root, variant):
         case "Storages":
             tree = make_tree(window, show_all("Storages"))
             tree.pack()
+
+    button_search = tk.Button(window, font=("DIN Condensed Bold (Body)", 26), text="Search", command=lambda: search_in_tree(tree))
+    button_search.pack(side=tk.LEFT, padx=50, pady=20)
 
     button_change = tk.Button(window, font=("DIN Condensed Bold (Body)", 26), text="Edit", command=lambda: edit_row(window))
     button_change.pack(side=tk.LEFT, padx=50, pady=20)

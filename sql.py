@@ -44,7 +44,7 @@ try:
                 case "BRV":
                     update_query = "UPDATE `BRV` SET ID_Of_BRV = %s, ID_OfStorage = %s, GroupOf_BRV = %s, GeneralActivity = %s, ID_OfRadionuclideDirectory = %s, DateOfReceipt = %s, ManufacturerOrSource = %s, ID_StorageMethod = %s WHERE ID_Of_BRV = %s"
                 case "RRV":
-                    update_query = "UPDATE `RRV` SET ID_Of_RRV = %s, ID_OfStorage = %s, CategoryOf_RRV = %s, GeneralActivity = %s, ID_OfRadionuclideDirectory = %s, DateOfReceipt = %s, ManufacturerOrSource = %s, ID_StorageMethod = %s WHERE ID_Of_RRV = %s"
+                    update_query = "UPDATE `RRV` SET ID_Of_RRV = %s, ID_OfStorage = %s, CategoryOf_RRV = %s, Characteristic = %s, GeneralActivity = %s, ID_OfRadionuclideDirectory = %s, DateOfReceipt = %s, ManufacturerOrSource = %s, ID_StorageMethod = %s WHERE ID_Of_RRV = %s"
                 case "TRV":
                     update_query = "UPDATE `TRV` SET ID_Of_TRV = %s, ID_OfStorage = %s, GroupOf_TRV = %s, GeneralActivity = %s, ID_OfRadionuclideDirectory = %s, DateOfReceipt = %s, ManufacturerOrSource = %s, ID_StorageMethod = %s WHERE ID_Of_TRV = %s"
                 case "DIV":
@@ -77,7 +77,7 @@ try:
                 case "BRV":
                     insert_query = "INSERT INTO `BRV` (ID_Of_BRV, ID_OfStorage, GroupOf_BRV, GeneralActivity, ID_OfRadionuclideDirectory, DateOfReceipt, ManufacturerOrSource, Id_StorageMethod) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
                 case "RRV":
-                    insert_query = "INSERT INTO `RRV` (ID_Of_RRV, ID_OfStorage, CategoryOf_RRV, GeneralActivity, ID_OfRadionuclideDirectory, DateOfReceipt, ManufacturerOrSource, Id_StorageMethod) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+                    insert_query = "INSERT INTO `RRV` (ID_Of_RRV, ID_OfStorage, CategoryOf_RRV, Characteristic, GeneralActivity, ID_OfRadionuclideDirectory, DateOfReceipt, ManufacturerOrSource, Id_StorageMethod) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
                 case "TRV":
                     insert_query = "INSERT INTO `TRV` (ID_Of_TRV, ID_OfStorage, GroupOf_TRV, GeneralActivity, ID_OfRadionuclideDirectory, DateOfReceipt, ManufacturerOrSource, Id_StorageMethod) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
                 case "DIV":
