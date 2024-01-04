@@ -1,7 +1,11 @@
-from tkinter import messagebox
+from tkinter import messagebox, simpledialog
 from sql import *
 import tkinter as tk
 from tkinter import ttk
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 
 def make_tree(window, rows):
     tree = ttk.Treeview(window, show="headings")
@@ -14,13 +18,72 @@ def make_tree(window, rows):
         tree.insert("", "end", values=tuple(row.values()))
     return tree
 
+def Report(root):
+    def report_file():
+        styles = getSampleStyleSheet()
+        centered_style = ParagraphStyle(
+            "Centered",
+            parent=styles["Normal"],
+            fontSize=32,
+            alignment=1)
+
+        report_text = "Report"
+        report_contitul = Paragraph(report_text, centered_style)
+        return report_contitul
+
+    def table_to_report(treeview):
+        headers = []
+        data = []
+        for col in treeview["columns"]:
+            headers.append(treeview.heading(col, option="text"))
+        for child in treeview.get_children():
+            values = [treeview.item(child, "values")]
+            data.extend(values)
+        table_data1 = [headers] + data
+        table = Table(table_data1)
+        style = TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                            ('FONTSIZE', (0, 0), (-1, -1), 7),
+                            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                            ('GRID', (0, 0), (-1, -1), 1, colors.black)])
+        table.setStyle(style)
+        return table
+
+    def create_text_for_report():
+        return "Nigga"
+
+
+    def text_to_file(text):
+        styles = getSampleStyleSheet()
+        paragraph = Paragraph(text, styles["Normal"])
+        return paragraph
+
+
+
+    tree_of_radiation_substances = make_tree(root, show_all("BRV"))
+    tree_of_storages = make_tree(root, show_all("Storages"))
+
+    filename = simpledialog.askstring("Імʼя фалйлу", "Введіь імʼя файлу для звіту:")
+    if filename == None or filename == "":
+        return
+    filename = filename + ".pdf"
+    doc = SimpleDocTemplate(filename, pagesize=letter)
+    
+    doc.build([report_file(), Spacer(1, 50), table_to_report(tree_of_radiation_substances), Spacer(1, 50),
+               table_to_report(tree_of_storages), Spacer(1, 50), text_to_file(create_text_for_report())])
+
+
+
 
 def button_click_for_table(root, variant):
     def on_closing():
         root.deiconify()
         window.destroy()
         return
-    
+
     def search_in_tree(tree):
         def search():
             search_query = entry_search.get().lower()
@@ -257,6 +320,9 @@ button_DIV.pack(pady=10)
 
 button_Storages = tk.Button(root, text="Показати Storages", command=lambda: button_click_for_table(root, "Storages"))
 button_Storages.pack(pady=10)
+
+button_Report = tk.Button(root, text="Зберегти звіт", command=lambda: Report(root))
+button_Report.pack(pady=10)
 
 
 
