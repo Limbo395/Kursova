@@ -22,6 +22,7 @@ def button_click_for_table(root, variant):
     def on_closing():
         root.deiconify()
         window.destroy()
+    
     def edit_row(window):
         def on_closing_third_window():
             window.deiconify()

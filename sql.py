@@ -28,6 +28,15 @@ try:
                         cursor.execute("SELECT * from `SourcesOfIonizingRadiation`")
                     case "Storages":
                         cursor.execute("SELECT * from `Storages`")
+                    case "Vocabulare_StorageId":
+                        cursor.execute("SELECT ID, NameOfStorage from `Storages`")
+                    case "Vocabulare_StorageCondition":
+                        cursor.execute("SELECT ID_Of_States, NameOfStates from `DirectoryOfStates`")
+                    case "Vocabulare_StorageMethods":
+                        cursor.execute("SELECT ID_OfStorageMethod, NameOfStorageMethod, TemperatereRequirementsInStorage, PressureRequirementsInStorage from `DirectoryOfStorageMethods`")
+                    case "Vocabulare_TypesOfStorage":
+                        cursor.execute("SELECT ID_OfType, NameOfTypes from `DirectoryOfTypes`")
+                
                 return cursor.fetchall()
     def update_row(variant, values):
         with conection.cursor() as cursor:
