@@ -23,32 +23,50 @@ def button_click_for_table(root, variant):
         root.deiconify()
         window.destroy()
     def search_in_tree(tree):
-        def search():
-            search_query = entry_search.get().lower()
+    def search():
+        search_query = entry_search.get().lower()
+        search_category = combo_search.get()
+        if search_category == "All":
             for item in tree.get_children():
                 values = tree.item(item, 'values')
                 if search_query in str(values).lower():
                     tree.selection_set(item)
                     tree.focus(item)
                     return
+        else:
+            column_index = tree['columns'].index(search_category)
+            for item in tree.get_children():
+                values = tree.item(item, 'values')
+                if search_query in str(values[column_index]).lower():
+                    tree.selection_set(item)
+                    tree.focus(item)
+                    return
 
-            messagebox.showinfo("Search", "No matching results found.")
+        messagebox.showinfo("Search", "No matching results found.")
 
-        search_window = tk.Toplevel()
-        search_window.title("Search")
-        
-        label_search = tk.Label(search_window, text="Search Query:", font=("DIN Condensed Bold (Body)", 14))
-        label_search.pack(padx=5, pady=5)
-        
-        entry_search = tk.Entry(search_window, width=70)
-        entry_search.pack(padx=5, pady=5)
-    
-        button_search = tk.Button(search_window, text="Search", command=search)
-        button_search.pack(padx=5, pady=5)
+    search_window = tk.Toplevel()
+    search_window.title("Search")
 
-        search_window.grab_set()
-        search_window.focus_set()
-        search_window.wait_window()
+    label_search = tk.Label(search_window, text="Search Query:", font=("DIN Condensed Bold (Body)", 14))
+    label_search.pack(padx=5, pady=5)
+
+    entry_search = tk.Entry(search_window, width=70)
+    entry_search.pack(padx=5, pady=5)
+
+    label_category = tk.Label(search_window, text="Search Category:", font=("DIN Condensed Bold (Body)", 14))
+    label_category.pack(padx=5, pady=5)
+
+    categories = ["All"] + list(tree['columns'])
+    combo_search = ttk.Combobox(search_window, values=categories, state="readonly")
+    combo_search.current(0)  # Встановлюємо вибір за замовчуванням на "All"
+    combo_search.pack(padx=5, pady=5)
+
+    button_search = tk.Button(search_window, text="Search", command=search)
+    button_search.pack(padx=5, pady=5)
+
+    search_window.grab_set()
+    search_window.focus_set()
+    search_window.wait_window()
         
     def edit_row(window):
         def on_closing_third_window():
