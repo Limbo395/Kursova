@@ -72,8 +72,11 @@ def Report(root):
     filename = filename + ".pdf"
     doc = SimpleDocTemplate(filename, pagesize=letter)
     
-    doc.build([report_file(), Spacer(1, 50), table_to_report(tree_of_radiation_substances), Spacer(1, 50),
-               table_to_report(tree_of_storages), Spacer(1, 50), text_to_file(create_text_for_report())])
+    doc.build([report_file(), Spacer(1, 50), 
+               table_to_report(tree_of_radiation_substances), Spacer(1, 50),
+               table_to_report(tree_of_storages), Spacer(1, 50),
+               text_to_file(create_text_for_report())
+               ])
 
 
 
