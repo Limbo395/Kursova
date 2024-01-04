@@ -3,7 +3,6 @@ from sql import *
 import tkinter as tk
 from tkinter import ttk
 
-#Створити дерево за параметрами
 def make_tree(window, rows):
     tree = ttk.Treeview(window, show="headings")
     tree.config(height=15)
@@ -17,7 +16,6 @@ def make_tree(window, rows):
 
 
 
-#Функції для кнопока
 def button_click_for_table(root, variant):
     def on_closing():
         root.deiconify()
@@ -57,7 +55,7 @@ def button_click_for_table(root, variant):
 
         categories = ["All"] + list(tree['columns'])
         combo_search = ttk.Combobox(search_window, values=categories, state="readonly")
-        combo_search.current(0)  # Встановлюємо вибір за замовчуванням на "All"
+        combo_search.current(0)
         combo_search.pack(side=tk.LEFT, padx=5, pady=5)
 
         label_search = tk.Label(search_window, text="Search Query:", font=("DIN Condensed Bold (Body)", 14))
@@ -96,7 +94,6 @@ def button_click_for_table(root, variant):
             additional_window.title("Additional Tables")
             additional_window.resizable(False, False)
 
-            # Show tables according to tables_to_display content
             for table_name in tables_to_display:
                 table_tree = make_tree(additional_window, show_all(table_name))
                 table_tree.pack()
@@ -155,7 +152,7 @@ def button_click_for_table(root, variant):
             return
         def add_new():
             new_values = [entry.get() for entry in entries]
-            insert_row(variant, new_values)  # pass values except for the ID
+            insert_row(variant, new_values)
             tree.insert("", "end", values=new_values)
             window.deiconify()
             add_window.destroy()
