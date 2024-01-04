@@ -70,6 +70,7 @@ def button_click_for_table(root, variant):
         search_window.grab_set()
         search_window.focus_set()
         search_window.wait_window()
+        print("n")
         
     def edit_row(window):
         def on_closing_third_window():
