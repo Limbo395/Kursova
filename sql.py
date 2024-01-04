@@ -69,7 +69,7 @@ try:
                 case "DIV":
                     update_query = "UPDATE `SourcesOfIonizingRadiation` SET ID_SourcesOfIonizingRadiation = %s, ID_OfStorage = %s, ID_OfRadionuclideDirectory = %s, Activity = %s, DateOfManufacture = %s, DateOfReceipt = %s, TermsOfServiceOfSIR = %s, NameOfTheDevice = %s, ManufucturerOrSource = %s, ID_StorageMethod = %s WHERE ID_SourcesOfIonizingRadiation = %s"
                 case "Storages":
-                    update_query = "UPDATE `Storages` SET NameOfStorage = %s, Location = %s, StorageCondition = %s, TypeOfStorageID = %s, StorageVolume = %s, CertificateID = %s, DateOfVerification = %s,  WHERE ID = %s"
+                    update_query = "UPDATE `Storages` SET ID = %s, NameOfStorage = %s, Location = %s, StorageConditionID = %s, TypeOfStorageID = %s, StorageVolume = %s, CertificateID = %s, DateOfVerification = %s  WHERE ID = %s"
             values.append(values[0]) 
             cursor.execute(update_query, values)
             conection.commit()
