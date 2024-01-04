@@ -13,7 +13,7 @@ def make_tree(window, rows):
     for row in rows:
         tree.insert("", "end", values=tuple(row.values()))
     return tree
-
+print(1)
 
 
 def button_click_for_table(root, variant):
