@@ -48,18 +48,21 @@ def button_click_for_table(root, variant):
         search_window.title("Search")
 
         label_search = tk.Label(search_window, text="Search Query:", font=("DIN Condensed Bold (Body)", 14))
-        label_search.pack(padx=5, pady=5)
+        label_search.pack(side=tk.RIGHT, padx=5, pady=5)
 
         entry_search = tk.Entry(search_window, width=70)
-        entry_search.pack(padx=5, pady=5)
+        entry_search.pack(side=tk.RIGHT, padx=5, pady=5)
+
 
         label_category = tk.Label(search_window, text="Search Category:", font=("DIN Condensed Bold (Body)", 14))
-        label_category.pack(padx=5, pady=5)
+        label_category.pack(side=tk.LEFT, padx=5, pady=5)
+
 
         categories = ["All"] + list(tree['columns'])
         combo_search = ttk.Combobox(search_window, values=categories, state="readonly")
         combo_search.current(0)  # Встановлюємо вибір за замовчуванням на "All"
-        combo_search.pack(padx=5, pady=5)
+        combo_search.pack(side=tk.LEFT, padx=5, pady=5)
+
 
         button_search = tk.Button(search_window, text="Search", command=search)
         button_search.pack(padx=5, pady=5)
