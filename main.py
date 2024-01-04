@@ -168,7 +168,6 @@ def button_click_for_table(root, variant):
             additional_window.title("Additional Tables")
             additional_window.resizable(False, False)
 
-            # Show tables according to tables_to_display content
             for table_name in tables_to_display:
                 table_tree = make_tree(additional_window, show_all(table_name))
                 table_tree.pack()
