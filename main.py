@@ -45,7 +45,7 @@ def Report(root):
                             ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
                             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
                             ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                            ('FONTSIZE', (0, 0), (-1, -1), 7),
+                            ('FONTSIZE', (0, 0), (-1, -1), 5),
                             ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
                             ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
                             ('GRID', (0, 0), (-1, -1), 1, colors.black)])
@@ -53,11 +53,7 @@ def Report(root):
         return table
 
     def create_text_for_report():
-        
-        return "RAV amount = "+str(for_report("RAV_amount"))
-    
-    
-
+        return "RAV amount = "
 
     def text_to_file(text):
         styles = getSampleStyleSheet()
@@ -75,14 +71,14 @@ def Report(root):
     doc = SimpleDocTemplate(filename, pagesize=letter)
     
     doc.build([report_file(), Spacer(1, 50), 
-               table_to_report(make_tree(root, show_all("BRV"))), Spacer(1, 50),
-               table_to_report(make_tree(root, show_all("RRV"))), Spacer(1, 50),
-               table_to_report(make_tree(root, show_all("TRV"))), Spacer(1, 50),
-               table_to_report(make_tree(root, show_all("DIV"))), Spacer(1, 50),
-               table_to_report(make_tree(root, show_all("Storages"))), Spacer(1, 50),
-               text_to_file(create_text_for_report()),
-               table_to_report(make_tree(root, for_report("CriticalStorages"))), Spacer(1, 50),
-               table_to_report(make_tree(root, for_report("OverdueStorages"))), Spacer(1, 50)])
+               table_to_report(make_tree(root, show_all("BRV"))), Spacer(1, 20),
+               table_to_report(make_tree(root, show_all("RRV"))), Spacer(1, 20),
+               table_to_report(make_tree(root, show_all("TRV"))), Spacer(1, 20),
+               table_to_report(make_tree(root, show_all("DIV"))), Spacer(1, 20),
+               table_to_report(make_tree(root, show_all("Storages"))), Spacer(1, 20),
+               text_to_file(create_text_for_report()),table_to_report(make_tree(root, for_report("RAV_amount"))),  Spacer(1, 20),
+               table_to_report(make_tree(root, for_report("CriticalStorages"))), Spacer(1, 20),
+               table_to_report(make_tree(root, for_report("OverdueStorages"))), Spacer(1, 20)])
 
 
 
