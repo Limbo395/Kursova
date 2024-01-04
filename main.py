@@ -22,6 +22,34 @@ def button_click_for_table(root, variant):
     def on_closing():
         root.deiconify()
         window.destroy()
+    def search_in_tree(tree):
+        def search():
+            search_query = entry_search.get().lower()
+            for item in tree.get_children():
+                values = tree.item(item, 'values')
+                if search_query in str(values).lower():
+                    tree.selection_set(item)
+                    tree.focus(item)
+                    return
+
+            messagebox.showinfo("Search", "No matching results found.")
+
+        search_window = tk.Toplevel()
+        search_window.title("Search")
+        
+        label_search = tk.Label(search_window, text="Search Query:", font=("DIN Condensed Bold (Body)", 14))
+        label_search.pack(padx=5, pady=5)
+        
+        entry_search = tk.Entry(search_window, width=70)
+        entry_search.pack(padx=5, pady=5)
+    
+        button_search = tk.Button(search_window, text="Search", command=search)
+        button_search.pack(padx=5, pady=5)
+
+        search_window.grab_set()
+        search_window.focus_set()
+        search_window.wait_window()
+        
     def edit_row(window):
         def on_closing_third_window():
             window.deiconify()
@@ -128,6 +156,9 @@ def button_click_for_table(root, variant):
         case "Storages":
             tree = make_tree(window, show_all("Storages"))
             tree.pack()
+
+    button_search = tk.Button(window, font=("DIN Condensed Bold (Body)", 26), text="Search", command=lambda: search_in_tree(tree))
+    button_search.pack(side=tk.LEFT, padx=50, pady=20)
 
     button_change = tk.Button(window, font=("DIN Condensed Bold (Body)", 26), text="Edit", command=lambda: edit_row(window))
     button_change.pack(side=tk.LEFT, padx=50, pady=20)
