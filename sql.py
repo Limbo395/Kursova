@@ -26,9 +26,10 @@ try:
                 case "DIV_activity":
                     cursor.execute("SELECT SUM(Activity) AS DIV_activity FROM `SourcesOfIonizingRadiation`")
                 case "CriticalStorages":
-                    cursor.execute("SELECT * FROM Storages WHERE StorageCondition IN (3, 4)")
+                    cursor.execute("SELECT * FROM Storages WHERE StorageConditionID IN (3, 4)")
                 case "OverdueStorages":
                     cursor.execute("SELECT * FROM Storages WHERE DateOfVerification + INTERVAL 6 MONTH <= CURDATE()")
+            return cursor.fetchall()
  
     def show_all(variant):
         with conection.cursor() as cursor:
@@ -54,7 +55,6 @@ try:
                     cursor.execute("SELECT ID, NameOfRadionuclide FROM `RadionuclideDirectory`")
                 case "Vocabulare_TypesOfStorage":
                     cursor.execute("SELECT ID_OfType, NameOfTypes from `DirectoryOfTypes`")
-
                     
             return cursor.fetchall()
     def update_row(variant, values):

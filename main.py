@@ -54,7 +54,7 @@ def Report(root):
 
     def create_text_for_report():
         
-        return "RAV amount = "+for_report("RAV_amount")
+        return "RAV amount = "+str(for_report("RAV_amount"))
     
     
 
