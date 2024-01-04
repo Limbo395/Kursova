@@ -52,8 +52,6 @@ def Report(root):
         table.setStyle(style)
         return table
 
-    def create_text_for_report():
-        return "RAV amount = "
 
     def text_to_file(text):
         styles = getSampleStyleSheet()
@@ -76,7 +74,10 @@ def Report(root):
                table_to_report(make_tree(root, show_all("TRV"))), Spacer(1, 20),
                table_to_report(make_tree(root, show_all("DIV"))), Spacer(1, 20),
                table_to_report(make_tree(root, show_all("Storages"))), Spacer(1, 20),
-               text_to_file(create_text_for_report()),table_to_report(make_tree(root, for_report("RAV_amount"))),  Spacer(1, 20),
+               text_to_file("RAV amount: "),table_to_report(make_tree(root, for_report("RAV_amount"))),  Spacer(1, 10),
+               text_to_file("RAV activity:"),table_to_report(make_tree(root, for_report("RAV_activity"))),  Spacer(1, 10),
+               text_to_file("DIV amount"),table_to_report(make_tree(root, for_report("DIV_amount"))),  Spacer(1, 10),
+               text_to_file("DIV activity:"),table_to_report(make_tree(root, for_report("DIV_activity"))),  Spacer(1, 10),
                table_to_report(make_tree(root, for_report("CriticalStorages"))), Spacer(1, 20),
                table_to_report(make_tree(root, for_report("OverdueStorages"))), Spacer(1, 20)])
 
