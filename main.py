@@ -7,7 +7,7 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, 
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 
-def make_tree(window, rows):
+def make_tree(window, rows):   #Ola
     tree = ttk.Treeview(window, show="headings")
     tree.config(height=15)
     tree["columns"] = tuple(rows[0].keys())
@@ -18,7 +18,7 @@ def make_tree(window, rows):
         tree.insert("", "end", values=tuple(row.values()))
     return tree
 
-def Report(root):
+def Report(root): #Ola
     def report_file():
         styles = getSampleStyleSheet()
         centered_style = ParagraphStyle(
@@ -74,13 +74,13 @@ def Report(root):
 
 
 
-def button_click_for_table(root, variant):
+def button_click_for_table(root, variant): # Max & Roma
     def on_closing():
         root.deiconify()
         window.destroy()
         return
 
-    def search_in_tree(tree):
+    def search_in_tree(tree): #Roma
         def search():
             search_query = entry_search.get().lower()
             search_category = combo_search.get()
@@ -129,7 +129,7 @@ def button_click_for_table(root, variant):
         search_window.focus_set()
         search_window.wait_window()
         
-    def edit_row(window):
+    def edit_row(window): #Max
         def on_closing_third_window():
             window.deiconify()
             edit_window.destroy()
@@ -190,7 +190,7 @@ def button_click_for_table(root, variant):
         display_tables_button = tk.Button(edit_window, text="Display Additional Tables", command=display_additional_tables)
         display_tables_button.grid(row=len(columns) + 1, column=0, columnspan=2, pady=10)
 
-    def delete_row():
+    def delete_row(): #Roma
         selected_item = tree.selection()
         if not selected_item:
             messagebox.showwarning("Delete", "Please select a row to delete.")
@@ -203,7 +203,7 @@ def button_click_for_table(root, variant):
             delete_row_table(variant, row_id)
             tree.delete(selected_item)
 
-    def add_new_row():
+    def add_new_row(): #Max
         def on_closing_third_window():
             window.deiconify()
             add_window.destroy()

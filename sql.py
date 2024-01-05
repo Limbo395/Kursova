@@ -12,7 +12,7 @@ try:
     )
 
 
-    def for_report(variant):
+    def for_report(variant): #Max
         with conection.cursor() as cursor:
             match variant:
                 case "RAV_amount":
@@ -31,7 +31,7 @@ try:
                     cursor.execute("SELECT * FROM Storages WHERE DateOfVerification + INTERVAL 6 MONTH <= CURDATE()")
             return cursor.fetchall()
  
-    def show_all(variant):
+    def show_all(variant):#Roma
         with conection.cursor() as cursor:
             match variant:
                 case "BRV":
@@ -57,7 +57,7 @@ try:
                     cursor.execute("SELECT ID_OfType, NameOfTypes from `DirectoryOfTypes` ORDER BY ID_OfType")
                     
             return cursor.fetchall()
-    def update_row(variant, values):
+    def update_row(variant, values):#Max
         with conection.cursor() as cursor:
             match variant:
                 case "BRV":
@@ -74,7 +74,7 @@ try:
             cursor.execute(update_query, values)
             conection.commit()
 
-    def delete_row_table(variant, row_id):
+    def delete_row_table(variant, row_id):#Ola
         with conection.cursor() as cursor:
             match variant:
                 case "BRV":
@@ -90,7 +90,7 @@ try:
             cursor.execute(delete_query, (row_id,))
             conection.commit()
 
-    def insert_row(variant, values):
+    def insert_row(variant, values): #Ola
         with conection.cursor() as cursor:
             match variant:
                 case "BRV":
